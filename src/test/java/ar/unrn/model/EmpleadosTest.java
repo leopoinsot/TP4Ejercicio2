@@ -3,7 +3,10 @@ package ar.unrn.model;
 import ar.unrn.database.ArchivoDatos;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,16 +14,21 @@ class EmpleadosTest {
 
 	@Test
 	void registrarEmpleadosTest() {
-		var regE = new ArchivoDatos("C:\\Users\\leonr\\OneDrive\\Escritorio\\ejercicio2TP4.txt") {
-			private static int cantidadEmpleadosRegistrados = 0;
+		var regE = new ArchivoDatos(new File("C:\\Users\\leonr\\OneDrive\\Escritorio\\ejercicio2TP4.txt")) {
+			private List<Empleado> empleados = new ArrayList<>();
 
 			@Override
 			public void registrarEmpleado(String apellido, String nombre, String fechaDeNacimiento, String email) {
-				cantidadEmpleadosRegistrados = cantidadEmpleadosRegistrados + 1;
+				empleados.add(new Empleado(apellido, nombre, LocalDate.parse(fechaDeNacimiento), email));
+			}
+
+			@Override
+			public List<Empleado> obtenerEmpleados() {
+				return empleados;
 			}
 
 			public int obtenerCantidadEmpleadosRegistrados() {
-				return cantidadEmpleadosRegistrados;
+				return empleados.size();
 			}
 		};
 		regE.registrarEmpleado("Poinsot", "Leonel", LocalDate.now().toString(), "leonrojopoinsot@gmail.com");
@@ -30,16 +38,21 @@ class EmpleadosTest {
 
 	@Test
 	public void mandarEmailFelizCumpleañosTest() {
-		var regE = new ArchivoDatos("C:\\Users\\leonr\\OneDrive\\Escritorio\\ejercicio2TP4.txt") {
-			private static int cantidadEmpleadosRegistrados = 0;
+		var regE = new ArchivoDatos(new File("C:\\Users\\leonr\\OneDrive\\Escritorio\\ejercicio2TP4.txt")) {
+			private List<Empleado> empleados = new ArrayList<>();
 
 			@Override
 			public void registrarEmpleado(String apellido, String nombre, String fechaDeNacimiento, String email) {
-				cantidadEmpleadosRegistrados = cantidadEmpleadosRegistrados + 1;
+				empleados.add(new Empleado(apellido, nombre, LocalDate.parse(fechaDeNacimiento), email));
+			}
+
+			@Override
+			public List<Empleado> obtenerEmpleados() {
+				return empleados;
 			}
 
 			public int obtenerCantidadEmpleadosRegistrados() {
-				return cantidadEmpleadosRegistrados;
+				return empleados.size();
 			}
 		};
 		regE.registrarEmpleado("Poinsot", "Leonel", LocalDate.now().toString(), "leonrojopoinsot@gmail.com");
