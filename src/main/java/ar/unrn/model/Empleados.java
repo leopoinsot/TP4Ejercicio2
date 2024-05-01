@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Empleados {
-	List<Empleado> empleados = new ArrayList<>();
+	private List<Empleado> empleados = new ArrayList<>();
 
-	public Empleados(List<Empleado> empleados) {
-		this.empleados = empleados;
+	private ServicioEmail email;
+
+	public Empleados(CargarEmpleados cargarEmpleados, ServicioEmail email) {
+		this.empleados = cargarEmpleados.empleados();
+		this.email = email;
 	}
 
-	public void mandarEmailFelizCumpleaños(ServicioEmail email, String asunto, String tema) {
+	public void mandarEmailFelizCumpleaños(String asunto, String tema) {
 		for (Empleado empleado : empleados) {
 			if (empleado.cumpleAñosHoy()) {
 				email.enviarEmail(empleado.obtenerEmail(), asunto, tema);
